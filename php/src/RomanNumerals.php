@@ -9,11 +9,7 @@ final class RomanNumerals
     {
         $result = '';
         if($digit < 40) {
-            $howManyTen = (int)($digit / 10);
-            for ($x = 1; $x <= $howManyTen; $x += 1) {
-                $result = $result.'X';
-            }
-            $digit -= $howManyTen*10;
+            list($result, $digit) = self::convertWhenBetween9and39($digit, $result);
         }
         if($digit == 9) {
             return $result.'IX';
@@ -23,7 +19,7 @@ final class RomanNumerals
             $digit -= 5;
         }
         if($digit == 4) {
-            return 'IV';
+            return $result.'IV';
         }
         if($digit <= 3) {
             return $result.self::convertWhenEqualOrLessThan3($digit);
@@ -32,23 +28,19 @@ final class RomanNumerals
 
     private static function convertWhenEqualOrLessThan3(int $digit): string
     {
-        $result = '';
-        for ($x = 1; $x <= $digit; $x += 1) {
-            $result = $result.'I';
-        }
-        return $result;
+        return str_repeat('I', $digit);
     }
 
     /**
      * @param int $digit
-     * @return string
+     * @param string $result
+     * @return array
      */
-    private static function convertWhenBetween5And8(int $digit): string
+    private static function convertWhenBetween9and39(int $digit, string $result): array
     {
-        $result = 'V';
-        for ($x = 1; $x <= ($digit % 5); $x += 1) {
-            $result = $result.'I';
-        }
-        return $result;
+        $howManyTen = (int) ($digit / 10);
+        $result = $result.str_repeat('X', $howManyTen);
+        $digit -= $howManyTen * 10;
+        return array($result, $digit);
     }
 }

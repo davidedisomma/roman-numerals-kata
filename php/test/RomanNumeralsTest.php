@@ -27,6 +27,7 @@ class RomanNumeralsTest extends TestCase
         $this->assertSame('XIII', RomanNumerals::fromDigit(13));
         $this->assertSame('XVII', RomanNumerals::fromDigit(17));
         $this->assertSame('XXII', RomanNumerals::fromDigit(22));
+        $this->assertSame('XXIV', RomanNumerals::fromDigit(24));
         $this->assertSame('XXIX', RomanNumerals::fromDigit(29));
         $this->assertSame('XXXV', RomanNumerals::fromDigit(35));
         $this->assertSame('XXXVIII', RomanNumerals::fromDigit(38));
