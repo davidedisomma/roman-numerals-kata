@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 class RomanNumeralsTest extends TestCase
 {
-    public function testFromDigit(): void
+    public function testWhenDigitCorrespondToSingleRomanNumeral(): void
     {
         $this->assertSame('I', RomanNumerals::fromDigit(1));
         $this->assertSame('V', RomanNumerals::fromDigit(5));
@@ -16,6 +16,12 @@ class RomanNumeralsTest extends TestCase
         $this->assertSame('C', RomanNumerals::fromDigit(100));
         $this->assertSame('D', RomanNumerals::fromDigit(500));
         $this->assertSame('M', RomanNumerals::fromDigit(1000));
+    }
+
+    public function testDigitSmallerThan4(): void
+    {
+        $this->assertSame('II', RomanNumerals::fromDigit(2));
+        $this->assertSame('III', RomanNumerals::fromDigit(3));
     }
 
 

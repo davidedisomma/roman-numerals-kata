@@ -9,6 +9,9 @@ final class RomanNumerals
 
     public static function fromDigit(int $digit): string
     {
+        if($digit <= 3) {
+            return self::convertWhenLessThan4($digit);
+        }
         switch ($digit) {
             case 1:
                 return 'I';
@@ -27,5 +30,14 @@ final class RomanNumerals
             default:
                 throw new Exception("Unexpected digit $digit");
         }
+    }
+
+    private static function convertWhenLessThan4(int $digit): string
+    {
+        $result = '';
+        for ($x = 1; $x <= $digit; $x += 1) {
+            $result = $result.'I';
+        }
+        return $result;
     }
 }
