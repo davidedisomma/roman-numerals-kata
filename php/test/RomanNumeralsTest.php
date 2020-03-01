@@ -7,17 +7,6 @@ use PHPUnit\Framework\TestCase;
 
 class RomanNumeralsTest extends TestCase
 {
-    public function testWhenDigitCorrespondToSingleRomanNumeral(): void
-    {
-        $this->assertSame('I', RomanNumerals::fromDigit(1));
-        $this->assertSame('V', RomanNumerals::fromDigit(5));
-        $this->assertSame('X', RomanNumerals::fromDigit(10));
-        $this->assertSame('L', RomanNumerals::fromDigit(50));
-        $this->assertSame('C', RomanNumerals::fromDigit(100));
-        $this->assertSame('D', RomanNumerals::fromDigit(500));
-        $this->assertSame('M', RomanNumerals::fromDigit(1000));
-    }
-
     public function testDigitSmallerThan4(): void
     {
         $this->assertSame('II', RomanNumerals::fromDigit(2));
@@ -30,6 +19,17 @@ class RomanNumeralsTest extends TestCase
         $this->assertSame('VI', RomanNumerals::fromDigit(6));
         $this->assertSame('VII', RomanNumerals::fromDigit(7));
         $this->assertSame('VIII', RomanNumerals::fromDigit(8));
+    }
+
+    public function testDigitBetween9And39(): void
+    {
+        $this->assertSame('IX', RomanNumerals::fromDigit(9));
+        $this->assertSame('XIII', RomanNumerals::fromDigit(13));
+        $this->assertSame('XVII', RomanNumerals::fromDigit(17));
+        $this->assertSame('XXII', RomanNumerals::fromDigit(22));
+        $this->assertSame('XXIX', RomanNumerals::fromDigit(29));
+        $this->assertSame('XXXV', RomanNumerals::fromDigit(35));
+        $this->assertSame('XXXVIII', RomanNumerals::fromDigit(38));
     }
 
 

@@ -2,35 +2,31 @@
 
 namespace Kata;
 
-use PHPUnit\Util\Exception;
-
 final class RomanNumerals
 {
 
     public static function fromDigit(int $digit): string
     {
-        if($digit <= 3) {
-            return self::convertWhenEqualOrLessThan3($digit);
+        $result = '';
+        if($digit < 40) {
+            $howManyTen = (int)($digit / 10);
+            for ($x = 1; $x <= $howManyTen; $x += 1) {
+                $result = $result.'X';
+            }
+            $digit -= $howManyTen*10;
+        }
+        if($digit == 9) {
+            return $result.'IX';
+        }
+        if($digit >= 5 && $digit <= 8) {
+            $result = $result.'V';
+            $digit -= 5;
         }
         if($digit == 4) {
             return 'IV';
         }
-        if($digit >= 5 && $digit <= 8) {
-            return self::convertWhenBetween5And8($digit);
-        }
-        switch ($digit) {
-            case 10:
-                return 'X';
-            case 50:
-                return 'L';
-            case 100:
-                return 'C';
-            case 500:
-                return 'D';
-            case 1000:
-                return 'M';
-            default:
-                throw new Exception("Unexpected digit $digit");
+        if($digit <= 3) {
+            return $result.self::convertWhenEqualOrLessThan3($digit);
         }
     }
 
