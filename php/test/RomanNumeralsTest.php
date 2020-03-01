@@ -24,5 +24,13 @@ class RomanNumeralsTest extends TestCase
         $this->assertSame('III', RomanNumerals::fromDigit(3));
     }
 
+    public function testDigitBetween4And8(): void
+    {
+        $this->assertSame('IV', RomanNumerals::fromDigit(4));
+        $this->assertSame('VI', RomanNumerals::fromDigit(6));
+        $this->assertSame('VII', RomanNumerals::fromDigit(7));
+        $this->assertSame('VIII', RomanNumerals::fromDigit(8));
+    }
+
 
 }

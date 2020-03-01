@@ -10,13 +10,15 @@ final class RomanNumerals
     public static function fromDigit(int $digit): string
     {
         if($digit <= 3) {
-            return self::convertWhenLessThan4($digit);
+            return self::convertWhenEqualOrLessThan3($digit);
+        }
+        if($digit == 4) {
+            return 'IV';
+        }
+        if($digit >= 5 && $digit <= 8) {
+            return self::convertWhenBetween5And8($digit);
         }
         switch ($digit) {
-            case 1:
-                return 'I';
-            case 5:
-                return 'V';
             case 10:
                 return 'X';
             case 50:
@@ -32,10 +34,23 @@ final class RomanNumerals
         }
     }
 
-    private static function convertWhenLessThan4(int $digit): string
+    private static function convertWhenEqualOrLessThan3(int $digit): string
     {
         $result = '';
         for ($x = 1; $x <= $digit; $x += 1) {
+            $result = $result.'I';
+        }
+        return $result;
+    }
+
+    /**
+     * @param int $digit
+     * @return string
+     */
+    private static function convertWhenBetween5And8(int $digit): string
+    {
+        $result = 'V';
+        for ($x = 1; $x <= ($digit % 5); $x += 1) {
             $result = $result.'I';
         }
         return $result;
