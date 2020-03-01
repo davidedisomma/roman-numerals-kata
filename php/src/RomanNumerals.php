@@ -8,6 +8,14 @@ final class RomanNumerals
     public static function fromDigit(int $digit): string
     {
         $result = '';
+        if($digit >= 50 && $digit < 90) {
+            $result = $result.'L';
+            $digit -= 50;
+        }
+        if($digit >= 40 && $digit < 50) {
+            $result = $result.'XL';
+            $digit -= 40;
+        }
         if($digit < 40) {
             list($result, $digit) = self::convertWhenBetween9and39($digit, $result);
         }
@@ -24,6 +32,7 @@ final class RomanNumerals
         if($digit <= 3) {
             return $result.self::convertWhenEqualOrLessThan3($digit);
         }
+        return $result;
     }
 
     private static function convertWhenEqualOrLessThan3(int $digit): string
