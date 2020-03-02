@@ -8,6 +8,13 @@ final class RomanNumerals
     public static function fromDigit(int $digit): string
     {
         $result = '';
+        if($digit >= 100 && $digit < 400) {
+            list($result, $digit) = self::convertWhenBetween100and400($digit, $result);
+        }
+        if($digit >= 90 && $digit < 100) {
+            $result = $result.'XC';
+            $digit -= 90;
+        }
         if($digit >= 50 && $digit < 90) {
             $result = $result.'L';
             $digit -= 50;
@@ -50,6 +57,14 @@ final class RomanNumerals
         $howManyTen = (int) ($digit / 10);
         $result = $result.str_repeat('X', $howManyTen);
         $digit -= $howManyTen * 10;
+        return array($result, $digit);
+    }
+
+    private static function convertWhenBetween100and400(int $digit, string $result): array
+    {
+        $howManyHendred = (int) ($digit / 100);
+        $result = $result.str_repeat('C', $howManyHendred);
+        $digit -= $howManyHendred * 100;
         return array($result, $digit);
     }
 }

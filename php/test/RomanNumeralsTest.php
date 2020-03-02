@@ -37,12 +37,22 @@ class RomanNumeralsTest extends TestCase
     public function testDigitBetween40And89(): void
     {
         $this->assertSame('XL', RomanNumerals::fromDigit(40));
+        $this->assertSame('XLI', RomanNumerals::fromDigit(41));
         $this->assertSame('L', RomanNumerals::fromDigit(50));
         $this->assertSame('LXVII', RomanNumerals::fromDigit(67));
         $this->assertSame('LXXIV', RomanNumerals::fromDigit(74));
-        $this->assertSame('LXXIX', RomanNumerals::fromDigit(79));
-        $this->assertSame('LXXXVIII', RomanNumerals::fromDigit(88));
+        $this->assertSame('LXXVIII', RomanNumerals::fromDigit(78));
+        $this->assertSame('LXXXIX', RomanNumerals::fromDigit(89));
     }
 
+    public function testDigitBetween90And399(): void
+    {
+        $this->assertSame('XC', RomanNumerals::fromDigit(90));
+        $this->assertSame('XCI', RomanNumerals::fromDigit(91));
+        $this->assertSame('C', RomanNumerals::fromDigit(100));
+        $this->assertSame('CLXVII', RomanNumerals::fromDigit(167));
+        $this->assertSame('CCXCVII', RomanNumerals::fromDigit(297));
+        $this->assertSame('CCCXCIX', RomanNumerals::fromDigit(399));
+    }
 
 }
