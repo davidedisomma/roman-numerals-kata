@@ -8,6 +8,14 @@ final class RomanNumerals
     public static function fromDigit(int $digit): string
     {
         $result = '';
+        if($digit >= 500 && $digit < 900) {
+            $result = $result.'D';
+            $digit -= 500;
+        }
+        if($digit >= 400 && $digit < 500) {
+            $result = $result.'CD';
+            $digit -= 400;
+        }
         if($digit >= 100 && $digit < 400) {
             list($result, $digit) = self::convertWhenBetween100and400($digit, $result);
         }
