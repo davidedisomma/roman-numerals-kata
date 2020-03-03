@@ -2,11 +2,17 @@
 
 namespace Kata;
 
+
+use InvalidArgumentException;
+
 final class RomanNumerals
 {
 
     public static function fromDigit(int $digit): string
     {
+        if($digit <= 0 || $digit >3000) {
+            throw new InvalidArgumentException("Digit $digit is overflown");
+        }
         $result = '';
         if($digit >= 1000 && $digit <= 3000) {
             list($result, $digit) = self::convertWhenBetween1000and3000($digit, $result);
@@ -62,11 +68,6 @@ final class RomanNumerals
         return str_repeat('I', $digit);
     }
 
-    /**
-     * @param int $digit
-     * @param string $result
-     * @return array
-     */
     private static function convertWhenBetween9and39(int $digit, string $result): array
     {
         $howManyTen = (int) ($digit / 10);

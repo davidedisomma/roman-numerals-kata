@@ -2,6 +2,7 @@
 
 namespace Kata\Test;
 
+use InvalidArgumentException;
 use Kata\RomanNumerals;
 use PHPUnit\Framework\TestCase;
 
@@ -74,5 +75,17 @@ class RomanNumeralsTest extends TestCase
         $this->assertSame('MMCDXLIX', RomanNumerals::fromDigit(2449));
         $this->assertSame('MMM', RomanNumerals::fromDigit(3000));
     }
+
+    public function testReturnErrorWhenDigitIsOverflown(): void
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        RomanNumerals::fromDigit(-1);
+        RomanNumerals::fromDigit(0);
+        RomanNumerals::fromDigit(3001);
+        RomanNumerals::fromDigit(12345678);
+        RomanNumerals::fromDigit(null);
+    }
+
 
 }
