@@ -8,6 +8,13 @@ final class RomanNumerals
     public static function fromDigit(int $digit): string
     {
         $result = '';
+        if($digit >= 1000 && $digit <= 3000) {
+            list($result, $digit) = self::convertWhenBetween1000and3000($digit, $result);
+        }
+        if($digit >= 900 && $digit < 1000) {
+            $result = $result.'CM';
+            $digit -= 900;
+        }
         if($digit >= 500 && $digit < 900) {
             $result = $result.'D';
             $digit -= 500;
@@ -70,9 +77,17 @@ final class RomanNumerals
 
     private static function convertWhenBetween100and400(int $digit, string $result): array
     {
-        $howManyHendred = (int) ($digit / 100);
-        $result = $result.str_repeat('C', $howManyHendred);
-        $digit -= $howManyHendred * 100;
+        $howManyHundred = (int) ($digit / 100);
+        $result = $result.str_repeat('C', $howManyHundred);
+        $digit -= $howManyHundred * 100;
+        return array($result, $digit);
+    }
+
+    private static function convertWhenBetween1000and3000(int $digit, string $result)
+    {
+        $howManyThousand = (int) ($digit / 1000);
+        $result = $result.str_repeat('M', $howManyThousand);
+        $digit -= $howManyThousand * 1000;
         return array($result, $digit);
     }
 }

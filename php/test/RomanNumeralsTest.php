@@ -65,4 +65,14 @@ class RomanNumeralsTest extends TestCase
         $this->assertSame('DCCCXCIX', RomanNumerals::fromDigit(899));
     }
 
+    public function testDigitBetween900And3000(): void
+    {
+        $this->assertSame('CM', RomanNumerals::fromDigit(900));
+        $this->assertSame('CMXCIX', RomanNumerals::fromDigit(999));
+        $this->assertSame('M', RomanNumerals::fromDigit(1000));
+        $this->assertSame('MCMLXXXIX', RomanNumerals::fromDigit(1989));
+        $this->assertSame('MMCDXLIX', RomanNumerals::fromDigit(2449));
+        $this->assertSame('MMM', RomanNumerals::fromDigit(3000));
+    }
+
 }
