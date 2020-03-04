@@ -48,47 +48,51 @@ final class RomanNumerals
             list($result, $digit) = self::convertWhenBetween9and39($digit, $result);
         }
         if($digit == 9) {
-            return $result.'IX';
+            $result = $result.'IX';
+            $digit -= 9;
         }
         if($digit >= 5 && $digit <= 8) {
             $result = $result.'V';
             $digit -= 5;
         }
         if($digit == 4) {
-            return $result.'IV';
+            $result = $result.'IV';
+            $digit -= 4;
         }
         if($digit <= 3) {
-            return $result.self::convertWhenEqualOrLessThan3($digit);
+            list($result) = self::convertWhenEqualOrLessThan3($digit, $result);
         }
         return $result;
     }
 
-    private static function convertWhenEqualOrLessThan3(int $digit): string
+    private static function convertWhenEqualOrLessThan3(int $digit, string $result): array
     {
-        return str_repeat('I', $digit);
+        return self::convertPowerOfTenToRomanSymbol(1, 'I', $digit, $result);
     }
 
     private static function convertWhenBetween9and39(int $digit, string $result): array
     {
-        $howManyTen = (int) ($digit / 10);
-        $result = $result.str_repeat('X', $howManyTen);
-        $digit -= $howManyTen * 10;
-        return array($result, $digit);
+        return self::convertPowerOfTenToRomanSymbol(10, 'X', $digit, $result);
     }
 
     private static function convertWhenBetween100and400(int $digit, string $result): array
     {
-        $howManyHundred = (int) ($digit / 100);
-        $result = $result.str_repeat('C', $howManyHundred);
-        $digit -= $howManyHundred * 100;
-        return array($result, $digit);
+        return self::convertPowerOfTenToRomanSymbol(100, 'C', $digit, $result);
     }
 
     private static function convertWhenBetween1000and3000(int $digit, string $result)
     {
-        $howManyThousand = (int) ($digit / 1000);
-        $result = $result.str_repeat('M', $howManyThousand);
-        $digit -= $howManyThousand * 1000;
+        return self::convertPowerOfTenToRomanSymbol(1000, 'M', $digit, $result);
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    private static function convertPowerOfTenToRomanSymbol(int $powerOfTen, string $romanSymbol, int $digit, string $result): array
+    {
+        $howManyUnit = (int) ($digit / $powerOfTen);
+        $result = $result.str_repeat($romanSymbol, $howManyUnit);
+        $digit -= $howManyUnit * $powerOfTen;
         return array($result, $digit);
     }
 }
