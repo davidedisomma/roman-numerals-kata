@@ -48,24 +48,29 @@ final class RomanNumerals
             list($result, $digit) = self::convertWhenBetween9and39($digit, $result);
         }
         if($digit == 9) {
-            return $result.'IX';
+            $result = $result.'IX';
+            $digit -= 9;
         }
         if($digit >= 5 && $digit <= 8) {
             $result = $result.'V';
             $digit -= 5;
         }
         if($digit == 4) {
-            return $result.'IV';
+            $result = $result.'IV';
+            $digit -= 4;
         }
         if($digit <= 3) {
-            return $result.self::convertWhenEqualOrLessThan3($digit);
+            list($result, $digit) = self::convertWhenEqualOrLessThan3($digit, $result);
         }
         return $result;
     }
 
-    private static function convertWhenEqualOrLessThan3(int $digit): string
+    private static function convertWhenEqualOrLessThan3(int $digit, string $result): array
     {
-        return str_repeat('I', $digit);
+        $howManyTen = (int) ($digit / 1);
+        $result = $result.str_repeat('I', $howManyTen);
+        $digit -= $howManyTen * 1;
+        return array($result, $digit);
     }
 
     private static function convertWhenBetween9and39(int $digit, string $result): array
