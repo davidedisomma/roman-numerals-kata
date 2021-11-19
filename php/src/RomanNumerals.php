@@ -14,10 +14,9 @@ final class RomanNumerals
             throw new InvalidArgumentException("Digit $digit is overflown");
         }
         $result = '';
-        if($digit >= 1000 && $digit <= 3000) {
-            list($partialResult, $digit) = (new ConversionPowerOfTenToRomanSymbol(1000, 'M'))->convert($digit);
-            $result = $result.$partialResult;
-        }
+        list($partialResult, $digit) = (new ConversionPowerOfTenToRomanSymbol(1000, 'M', new BetweenTwoValues(1000, 3000)))->convert($digit);
+        $result = $result.$partialResult;
+
         if($digit >= 900 && $digit < 1000) {
             list($partialResult, $digit) = (new ConversionIntermediateValuesBetweenTwoPowersOfTen(900, 'CM'))->convert($digit);
             $result = $result.$partialResult;
@@ -30,10 +29,8 @@ final class RomanNumerals
             list($partialResult, $digit) = (new ConversionIntermediateValuesBetweenTwoPowersOfTen(400, 'CD'))->convert($digit);
             $result = $result.$partialResult;
         }
-        if($digit >= 100 && $digit < 400) {
-            list($partialResult, $digit) = (new ConversionPowerOfTenToRomanSymbol(100, 'C'))->convert($digit);
-            $result = $result.$partialResult;
-        }
+        list($partialResult, $digit) = (new ConversionPowerOfTenToRomanSymbol(100, 'C', new BetweenTwoValuesUpperBoundExcluded(100, 400)))->convert($digit);
+        $result = $result.$partialResult;
         if($digit >= 90 && $digit < 100) {
             list($partialResult, $digit) = (new ConversionIntermediateValuesBetweenTwoPowersOfTen(90, 'XC'))->convert($digit);
             $result = $result.$partialResult;
@@ -46,10 +43,9 @@ final class RomanNumerals
             list($partialResult, $digit) = (new ConversionIntermediateValuesBetweenTwoPowersOfTen(40, 'XL'))->convert($digit);
             $result = $result.$partialResult;
         }
-        if($digit < 40) {
-            list($partialResult, $digit) = (new ConversionPowerOfTenToRomanSymbol(10, 'X'))->convert($digit);
+            list($partialResult, $digit) = (new ConversionPowerOfTenToRomanSymbol(10, 'X', new LessThanValue(40)))->convert($digit);
             $result = $result.$partialResult;
-        }
+
         if($digit == 9) {
             list($partialResult, $digit) = (new ConversionIntermediateValuesBetweenTwoPowersOfTen(9, 'IX'))->convert($digit);
             $result = $result.$partialResult;
@@ -63,7 +59,7 @@ final class RomanNumerals
             $result = $result.$partialResult;
         }
         if($digit <= 3) {
-            list($partialResult) = (new ConversionPowerOfTenToRomanSymbol(1, 'I'))->convert($digit);
+            list($partialResult) = (new ConversionPowerOfTenToRomanSymbol(1, 'I', new BetweenTwoValues(0, 3)))->convert($digit);
             $result = $result.$partialResult;
         }
         return $result;
