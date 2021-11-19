@@ -15,7 +15,8 @@ final class RomanNumerals
         }
         $result = '';
         if($digit >= 1000 && $digit <= 3000) {
-            list($result, $digit) = (RomanNumerals::convertPowerOfTenToRomanSymbol(1000, 'M', $digit, $result));
+            list($partialResult, $digit) = (new ConversionPowerOfTenToRomanSymbol(1000, 'M'))->convert($digit);
+            $result = $result.$partialResult;
         }
         if($digit >= 900 && $digit < 1000) {
             list($result, $digit) = self::convertIntermediateValuesBetweenTwoPowersOfTen(900, 'CM', $result, $digit);
@@ -27,7 +28,8 @@ final class RomanNumerals
             list($result, $digit) = self::convertIntermediateValuesBetweenTwoPowersOfTen(400, 'CD', $result, $digit);
         }
         if($digit >= 100 && $digit < 400) {
-            list($result, $digit) = (RomanNumerals::convertPowerOfTenToRomanSymbol(100, 'C', $digit, $result));
+            list($partialResult, $digit) = (new ConversionPowerOfTenToRomanSymbol(100, 'C'))->convert($digit);
+            $result = $result.$partialResult;
         }
         if($digit >= 90 && $digit < 100) {
             list($result, $digit) = self::convertIntermediateValuesBetweenTwoPowersOfTen(90, 'XC', $result, $digit);
@@ -39,7 +41,8 @@ final class RomanNumerals
             list($result, $digit) = self::convertIntermediateValuesBetweenTwoPowersOfTen(40, 'XL', $result, $digit);
         }
         if($digit < 40) {
-            list($result, $digit) = (RomanNumerals::convertPowerOfTenToRomanSymbol(10, 'X', $digit, $result));
+            list($partialResult, $digit) = (new ConversionPowerOfTenToRomanSymbol(10, 'X'))->convert($digit);
+            $result = $result.$partialResult;
         }
         if($digit == 9) {
             list($result, $digit) = self::convertIntermediateValuesBetweenTwoPowersOfTen(9, 'IX', $result, $digit);
@@ -51,20 +54,10 @@ final class RomanNumerals
             list($result, $digit) = self::convertIntermediateValuesBetweenTwoPowersOfTen(4, 'IV', $result, $digit);
         }
         if($digit <= 3) {
-            list($result) = (RomanNumerals::convertPowerOfTenToRomanSymbol(1, 'I', $digit, $result));
+            list($partialResult) = (new ConversionPowerOfTenToRomanSymbol(1, 'I'))->convert($digit);
+            $result = $result.$partialResult;
         }
         return $result;
-    }
-
-    /**
-     * @return array<mixed>
-     */
-    private static function convertPowerOfTenToRomanSymbol(int $powerOfTen, string $romanSymbol, int $digit, string $result): array
-    {
-        $howManyUnit = (int) ($digit / $powerOfTen);
-        $result = $result.str_repeat($romanSymbol, $howManyUnit);
-        $digit -= $howManyUnit * $powerOfTen;
-        return array($result, $digit);
     }
 
     /**
