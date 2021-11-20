@@ -7,10 +7,19 @@ use InvalidArgumentException;
 
 final class RomanNumerals
 {
-    /**
-     * @return ConversionDigitToRomanNumeral
-     */
-    private static function rules(): ConversionDigitToRomanNumeral
+    private ConversionDigitToRomanNumeral $rules;
+
+    public function __construct(ConversionDigitToRomanNumeral $rules)
+    {
+        $this->rules = $rules;
+    }
+
+    public function fromDigit(int $digit): string
+    {
+        return $this->rules->convert($digit);
+    }
+
+    public static function getInstance(): RomanNumerals
     {
         $until3Rule = new ConversionPowerOfTenToRomanSymbol(1, 'I', new BetweenTwoValues(0, 3), new NoConvertion());
         $fourRule = new ConversionIntermediateValuesBetweenTwoPowersOfTen(4, 'IV', new EqualToValue(4), $until3Rule);
@@ -25,11 +34,8 @@ final class RomanNumerals
         $between500And900Rule = new ConversionIntermediateValuesBetweenTwoPowersOfTen(500, 'D', new BetweenTwoValuesUpperBoundExcluded(500, 900), $between400And500Rule);
         $between900And1000Rule = new ConversionIntermediateValuesBetweenTwoPowersOfTen(900, 'CM', new BetweenTwoValuesUpperBoundExcluded(900, 1000), $between500And900Rule);
         $between1000And3000Rule = new ConversionPowerOfTenToRomanSymbol(1000, 'M', new BetweenTwoValues(1000, 3000), $between900And1000Rule);
-        return new ValidationRule(0, 3000, $between1000And3000Rule);
-    }
 
-    public static function fromDigit(int $digit): string
-    {
-        return self::rules()->convert($digit);
+        return new RomanNumerals(new ValidationRule(0, 3000, $between1000And3000Rule));
+
     }
 }
