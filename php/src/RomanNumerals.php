@@ -24,15 +24,12 @@ final class RomanNumerals
         $between400And500Rule = new ConversionIntermediateValuesBetweenTwoPowersOfTen(400, 'CD', new BetweenTwoValuesUpperBoundExcluded(400, 500), $between100And400Rule);
         $between500And900Rule = new ConversionIntermediateValuesBetweenTwoPowersOfTen(500, 'D', new BetweenTwoValuesUpperBoundExcluded(500, 900), $between400And500Rule);
         $between900And1000Rule = new ConversionIntermediateValuesBetweenTwoPowersOfTen(900, 'CM', new BetweenTwoValuesUpperBoundExcluded(900, 1000), $between500And900Rule);
-        return new ConversionPowerOfTenToRomanSymbol(1000, 'M', new BetweenTwoValues(1000, 3000), $between900And1000Rule);
+        $between1000And3000Rule = new ConversionPowerOfTenToRomanSymbol(1000, 'M', new BetweenTwoValues(1000, 3000), $between900And1000Rule);
+        return new ValidationRule(0, 3000, $between1000And3000Rule);
     }
 
     public static function fromDigit(int $digit): string
     {
-        if($digit <= 0 || $digit >3000) {
-            throw new InvalidArgumentException("Digit $digit is overflown");
-        }
-
         return self::rules()->convert($digit);
     }
 }
