@@ -32,8 +32,7 @@ final class RomanNumerals
         if($digit <= 0 || $digit >3000) {
             throw new InvalidArgumentException("Digit $digit is overflown");
         }
-        $result = '';
-        list($result) = self::rules()->convert($result, $digit);
-        return $result;
+
+        return self::rules()->convert($digit);
     }
 }

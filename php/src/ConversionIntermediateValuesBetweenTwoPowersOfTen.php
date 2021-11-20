@@ -20,24 +20,14 @@ class ConversionIntermediateValuesBetweenTwoPowersOfTen implements ConversionDig
         $this->nextRule = $nextRule;
     }
 
-    public function convert(string $result, int $digit): array
+    public function convert(int $digit): string
     {
-        list($result, $digit) = $this->fireRuleIfPossible($digit, $result);
-
-        return $this->nextRule->convert($result, $digit);
-    }
-
-    /**
-     * @param int $digit
-     * @param string $result
-     * @return array
-     */
-    private function fireRuleIfPossible(int $digit, string $result): array
-    {
+        $romanNumeral = '';
         if ($this->ruleFire->isFiredFor($digit)) {
             $digit -= $this->digitValue;
-            return array($result.$this->romanSymbol, $digit);
+            $romanNumeral = $this->romanSymbol;
         }
-        return array($result, $digit);
+
+        return $romanNumeral.$this->nextRule->convert($digit);
     }
 }

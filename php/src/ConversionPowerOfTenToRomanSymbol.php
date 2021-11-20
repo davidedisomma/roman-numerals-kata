@@ -21,26 +21,17 @@ class ConversionPowerOfTenToRomanSymbol implements ConversionDigitToRomanNumeral
         $this->nextRule = $nextRule;
     }
 
-    public function convert(string $result, int $digit): array
+    public function convert(int $digit): string
     {
-        list($result, $digit) = $this->fireRuleIfPossible($digit, $result);
-        return $this->nextRule->convert($result, $digit);
-    }
-
-    /**
-     * @param int $digit
-     * @param string $result
-     * @return array
-     */
-    private function fireRuleIfPossible(int $digit, string $result): array
-    {
+        $romanNumeral = '';
         if ($this->ruleFire->isFiredFor($digit)) {
             $howManyUnit = (int) ($digit / $this->powerOfTen);
             $digit -= $howManyUnit * $this->powerOfTen;
 
-            return array($result.str_repeat($this->romanSymbol, $howManyUnit), $digit);
+            $romanNumeral = str_repeat($this->romanSymbol, $howManyUnit);
         }
 
-        return array($result, $digit);
+        return $romanNumeral.$this->nextRule->convert($digit);
     }
+
 }
