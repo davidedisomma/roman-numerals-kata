@@ -10,10 +10,10 @@ class ConversionPowerOfTenToRomanSymbol implements ConversionDigitToRomanNumeral
     private $powerOfTen;
     private $romanSymbol;
     private ConversionRuleFire $ruleFire;
-    private ?ConversionDigitToRomanNumeral $nextRule;
+    private ConversionDigitToRomanNumeral $nextRule;
 
 
-    public function __construct(int $powerOfTen, string $romanSymbol, ConversionRuleFire $ruleFire, ?ConversionDigitToRomanNumeral $nextRule = null)
+    public function __construct(int $powerOfTen, string $romanSymbol, ConversionRuleFire $ruleFire, ConversionDigitToRomanNumeral $nextRule)
     {
         $this->powerOfTen = $powerOfTen;
         $this->romanSymbol = $romanSymbol;
@@ -24,11 +24,7 @@ class ConversionPowerOfTenToRomanSymbol implements ConversionDigitToRomanNumeral
     public function convert(string $result, int $digit): array
     {
         list($result, $digit) = $this->fireRuleIfPossible($digit, $result);
-        if($this->nextRule !== null) {
-            return $this->nextRule->convert($result, $digit);
-        }
-
-        return array($result, $digit);
+        return $this->nextRule->convert($result, $digit);
     }
 
     /**
