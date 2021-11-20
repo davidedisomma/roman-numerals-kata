@@ -7,8 +7,8 @@ namespace Kata;
 class NoConvertion implements ConversionDigitToRomanNumeral
 {
 
-    public function convert(int $digit): array
+    public function convert(string $result, int $digit): array
     {
-        return array('', 0);
+        return array($result, 0);
     }
 }

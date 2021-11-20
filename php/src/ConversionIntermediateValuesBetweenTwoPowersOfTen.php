@@ -9,25 +9,25 @@ class ConversionIntermediateValuesBetweenTwoPowersOfTen implements ConversionDig
 
     private int $digitValue;
     private string $romanSymbol;
-    private ?ConversionRuleFire $ruleFire;
+    private ConversionRuleFire $ruleFire;
 
-    public function __construct(int $digitValue, string $romanSymbol, ?ConversionRuleFire $ruleFire = null)
+    public function __construct(int $digitValue, string $romanSymbol, ConversionRuleFire $ruleFire)
     {
         $this->digitValue = $digitValue;
         $this->romanSymbol = $romanSymbol;
         $this->ruleFire = $ruleFire;
     }
 
-    public function convert(int $digit): array
+    public function convert(string $result, int $digit): array
     {
         if($this->ruleFire != null) {
             if($this->ruleFire->isFiredFor($digit)) {
                 $digit -= $this->digitValue;
-                return array($this->romanSymbol, $digit);
+                return array($result.$this->romanSymbol, $digit);
             }
-            return array('', $digit);
+            return array($result, $digit);
         }
         $digit -= $this->digitValue;
-        return array($this->romanSymbol, $digit);
+        return array($result.$this->romanSymbol, $digit);
     }
 }

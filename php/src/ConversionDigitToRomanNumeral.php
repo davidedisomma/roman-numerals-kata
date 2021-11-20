@@ -6,5 +6,5 @@ namespace Kata;
 
 interface ConversionDigitToRomanNumeral
 {
-    public function convert(int $digit): array;
+    public function convert(string $result, int $digit): array;
 }

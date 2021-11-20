@@ -7,7 +7,10 @@ use InvalidArgumentException;
 
 final class RomanNumerals
 {
-    private static function rules()
+    /**
+     * @return array<ConversionDigitToRomanNumeral>
+     */
+    private static function rules(): array
     {
         return [
             new ConversionPowerOfTenToRomanSymbol(1000, 'M', new BetweenTwoValues(1000, 3000)),
@@ -33,8 +36,7 @@ final class RomanNumerals
         }
         $result = '';
         foreach (self::rules() as $rule) {
-            list($partialResult, $digit) = $rule->convert($digit);
-            $result = $result.$partialResult;
+            list($result, $digit) = $rule->convert($result, $digit);
         }
         return $result;
     }
